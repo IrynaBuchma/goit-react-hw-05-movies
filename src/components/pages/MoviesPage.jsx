@@ -1,11 +1,9 @@
-import Header from 'components/Header/Header';
 import React from 'react';
 
 const MoviesPage = () => {
-    return <>
-        <Header/>
+    return (
         <div>Movies</div>
-    </>
+    )
 }
 
 export default MoviesPage;
