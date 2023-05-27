@@ -5,19 +5,17 @@ export default function Navigation() {
     return (
         <nav className={css.nav}>
             <NavLink
-              exact
               to="/"
               className={css.link}
-              activeClassName={css.activeLink}
+              activeclassname={css.activeLink}
             >
                 Home
             </NavLink>
 
             <NavLink
-              exact
               to="/movies"
               className={css.link}
-              activeClassName={css.activeLink}
+              activeclassname={css.activeLink}
             >
                 Movies
             </NavLink>

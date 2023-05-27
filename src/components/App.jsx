@@ -1,8 +1,8 @@
 // import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import HomePage from './pages/HomePage';
-import MoviesPage from './pages/MoviesPage';
-import MovieDetailsPage from './pages/MovieDetailsPage';
+import HomePage from './pages/HomePage/HomePage';
+import MoviesPage from './pages/MoviesPage/MoviesPage';
+import MovieDetailsPage from './pages/MovieDetailPage/MovieDetailsPage';
 import Layout from "./Layout/Layout";
 
 const App = () => {

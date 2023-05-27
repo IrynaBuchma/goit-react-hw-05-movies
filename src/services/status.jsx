@@ -1,8 +1,8 @@
-const status = {
+const Status = {
     IDLE: 'idle',
     PENDING: 'pending',
     RESOLVED: 'resolved',
     REJECTED: 'rejected',
 }
 
-export default status;
+export default Status;
