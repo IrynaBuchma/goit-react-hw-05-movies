@@ -11,15 +11,18 @@
   .moviesItem {
     border-radius: 5px;
     box-shadow: inset rgba(0, 0, 0, 0.5) -3px -3px 8px,
-      inset rgba(255, 255, 255, 0.9) 3px 3px 8px,
+      inset rgba(130, 129, 129, 0.9) 3px 3px 8px,
       rgba(90, 87, 87, 0.8) 3px 3px 8px -3px;
     overflow: hidden;
   }
   
   .movieTitle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    font-style: italic;
-    color: white;
+    font-weight: 700;
+    color: black;
   }
   
   .poster {

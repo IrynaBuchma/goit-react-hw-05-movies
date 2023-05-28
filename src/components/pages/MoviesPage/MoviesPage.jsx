@@ -1,5 +1,5 @@
-import { useState, useEffect, useMemo } from 'react';
-import { NavLink, useSearchParams } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { NavLink, useLocation } from "react-router-dom";
 import apiService from '../../../services/apiService';
 import ResponsivePagination from 'react-responsive-pagination';
 import Status from '../../../services/status';
@@ -11,33 +11,31 @@ import css from './MoviesPage.module.css';
 import '../../../services/pagination.css';
 
 export default function MoviesPage() {
-    const [searchParams] = useSearchParams();
     const [query, setQuery] = useState('');
     const [movies, setMovies] = useState(null);
     const [totalPages, setTotalPages] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const [error, setError] = useState(null);
-    const [status, setStatus] = useState(Status.IDLE); 
+    const [status, setStatus] = useState(Status.IDLE);
+    const location = useLocation();
 
-    const newSearch = searchParams.get('query');
 
-    const params = useMemo(
-        () => Object.fromEntries([...searchParams]),
-        [searchParams]
-      );
+    const getPage = new URLSearchParams(location.search).get('page') ?? 1;
 
-      useEffect(() => {
-        
-        setQuery(newSearch, currentPage);
-      }, [query, newSearch, currentPage]);
+    useEffect(() => {
+      if(location.search === '') return;
 
-        const{ url } = params;
+        const newSearch = new URLSearchParams(location.search).get('query');
+             
+        setQuery(newSearch, getPage);
+      }, [location.search, getPage]);
+
 
       useEffect(() => {
         if(!query) return;
         setStatus(Status.PENDING);
         apiService
-            .getMoviesByKeyWord(query, currentPage)
+            .getMoviesByKeyWord(query, getPage)
             .then(({ results, total_pages }) =>{
                 if(results.length === 0) {
                     setError(`No results found for "${query}!"`);
@@ -53,7 +51,7 @@ export default function MoviesPage() {
                 setError(error.message);
                 setStatus(Status.REJECTED);
             })
-      }, [query, newSearch, currentPage]);
+      }, [query, getPage]);
 
       const searchImages = newSearch => {
         if(query === newSearch) return;
@@ -89,7 +87,7 @@ export default function MoviesPage() {
                         />
                         <NavLink
                             to={{
-                             pathname: `${url}/${movie.id}`,
+                             pathname: `/movies/${movie.id}`,
                             }}
                              className={css.link}
                         >

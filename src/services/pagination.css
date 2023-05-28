@@ -21,7 +21,8 @@
   }
   
   .page-item a.page-link:hover {
-    background-color: #4914d9;
+    background-color: #a09fa1;
+    color: #ffffff;
   }
   
   .page-item.active .page-link {
