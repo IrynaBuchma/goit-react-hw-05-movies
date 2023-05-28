@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { NavLink, Outlet, useParams, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import apiService from '../../../services/apiService';
 import Status from '../../../services/status';
 import Container from '../../../components/Loader/Loader';
@@ -12,7 +12,6 @@ import css from './MovieDetailPage.module.css';
 export default function MovieDetailsPage() {
 
     const [movie, setMovie] = useState(null);
-    const [movieId] = useParams();
     const location = useLocation();
     const navigate = useNavigate();
     const [error, setError] = useState(null);
@@ -23,7 +22,7 @@ export default function MovieDetailsPage() {
     useEffect(() => {
         setStatus(Status.PENDING);
         apiService
-        .getMovieById(movieId)
+        .getMovieById(movie.id)
         .then(({ data }) => {
             setMovie(data);
             setStatus(Status.RESOLVED);
@@ -33,7 +32,7 @@ export default function MovieDetailsPage() {
             setError('Something went wrong. Please try again later.');
             setStatus(Status.REJECTED);
         })
-    }, [movieId, error])
+    }, [movie.id, error])
 
     return (
       <>
@@ -83,7 +82,7 @@ export default function MovieDetailsPage() {
         <div className={css.navigation}>
           <h2 className={css.information}>Additional Information</h2>
           <NavLink
-            to={`/movies/${movieId}/cast`}
+            to={`/movies/${movie.id}/cast`}
             className={css.link}
             activeclassname={css.activeLink}
             state={location.state}
@@ -92,7 +91,7 @@ export default function MovieDetailsPage() {
           </NavLink>
 
           <NavLink
-            to={`/movies/${movieId}/reviews`}
+            to={`/movies/${movie.id}/reviews`}
             className={css.link}
             activeclassname={css.activeLink}
             state={location.state}

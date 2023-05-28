@@ -19,7 +19,6 @@ export default function MoviesPage() {
     const [status, setStatus] = useState(Status.IDLE);
     const location = useLocation();
 
-
     const getPage = new URLSearchParams(location.search).get('page') ?? 1;
 
     useEffect(() => {
@@ -42,6 +41,7 @@ export default function MoviesPage() {
                     setStatus(Status.REJECTED);
                     return;
                 }
+                console.log(results);
                 setMovies(results);
                 setTotalPages(total_pages);
                 setStatus(Status.RESOLVED);
@@ -86,9 +86,7 @@ export default function MoviesPage() {
                             className={css.poster}
                         />
                         <NavLink
-                            to={{
-                             pathname: `/movies/${movie.id}`,
-                            }}
+                            to={`/movies/${movie.id}`}
                              className={css.link}
                         >
                          <span className={css.movieTitle}>{movie.title}</span>
