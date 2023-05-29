@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { NavLink, useLocation } from "react-router-dom";
-import apiService from '../../../services/apiService';
+import apiService from '../../services/apiService';
 import ResponsivePagination from 'react-responsive-pagination';
-import Status from '../../../services/status';
+import Status from '../../services/status';
 import Loader from 'components/Loader/Loader';
 import Error from 'components/Error/Error';
-import noPhoto from '../../../images/No_image_available.jpg';
+import noPhoto from '../../images/No_image_available.jpg';
 import Searchbar from 'components/Searchbar/Searchbar'
 import css from './MoviesPage.module.css';
-import '../../../services/pagination.css';
+import '../../services/pagination.css';
 
 export default function MoviesPage() {
     const [query, setQuery] = useState('');
@@ -17,24 +17,14 @@ export default function MoviesPage() {
     const [currentPage, setCurrentPage] = useState(1);
     const [error, setError] = useState(null);
     const [status, setStatus] = useState(Status.IDLE);
+
     const location = useLocation();
-
-    const getPage = new URLSearchParams(location.search).get('page') ?? 1;
-
-    useEffect(() => {
-      if(location.search === '') return;
-
-        const newSearch = new URLSearchParams(location.search).get('query');
-             
-        setQuery(newSearch, getPage);
-      }, [location.search, getPage]);
-
-
+   
       useEffect(() => {
         if(!query) return;
         setStatus(Status.PENDING);
         apiService
-            .getMoviesByKeyWord(query, getPage)
+            .getMoviesByKeyWord(query, currentPage)
             .then(({ results, total_pages }) =>{
                 if(results.length === 0) {
                     setError(`No results found for "${query}!"`);
@@ -51,7 +41,7 @@ export default function MoviesPage() {
                 setError(error.message);
                 setStatus(Status.REJECTED);
             })
-      }, [query, getPage]);
+      }, [query, currentPage]);
 
       const searchImages = newSearch => {
         if(query === newSearch) return;
@@ -86,7 +76,7 @@ export default function MoviesPage() {
                             className={css.poster}
                         />
                         <NavLink
-                            to={`/movies/${movie.id}`}
+                            to={`/movies/${movie.id}`} state={{ from: location }}
                              className={css.link}
                         >
                          <span className={css.movieTitle}>{movie.title}</span>

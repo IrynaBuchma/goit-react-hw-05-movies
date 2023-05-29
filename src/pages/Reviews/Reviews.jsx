@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import Status from '../../../services/status';
+import Status from '../../services/status';
 import { useParams } from 'react-router-dom';
-import apiService from '../../../services/apiService';
+import apiService from '../../services/apiService';
 import Loader from 'components/Loader/Loader';
 import Error from 'components/Error/Error';
 import css from './Reviews.module.css';

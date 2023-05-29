@@ -1,10 +1,10 @@
 // import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import HomePage from './pages/HomePage/HomePage';
-import MoviesPage from './pages/MoviesPage/MoviesPage';
-import MovieDetailsPage from './pages/MovieDetailPage/MovieDetailPage';
-import Cast from '../components/pages/Cast/Cast';
-import Reviews from '../components/pages/Reviews/Reviews';
+import HomePage from '../pages/HomePage/HomePage';
+import MoviesPage from '../pages/MoviesPage/MoviesPage';
+import MovieDetailsPage from '../pages/MovieDetailsPage/MovieDetailsPage';
+import Cast from '../pages/Cast/Cast';
+import Reviews from '../pages/Reviews/Reviews';
 import Layout from "./Layout/Layout";
 
 const App = () => {
@@ -13,9 +13,9 @@ const App = () => {
         <Route path='/' element={<Layout />}>
             <Route index element={<HomePage />} />
             <Route path='movies' element={<MoviesPage />} />
-            <Route path='movies/:movie.id' element={<MovieDetailsPage />} />
-              <Route path='movies/:movie.id/cast' element={<Cast />} />
-              <Route path='movies/:movie.id/reviews' element={<Reviews />} />
+            <Route path='movies/:movieId' element={<MovieDetailsPage />} />
+              <Route path='cast' element={<Cast />} />
+              <Route path='reviews' element={<Reviews />} />
         </Route>
         <Route path="*" element={<HomePage />} />
     </Routes>

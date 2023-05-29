@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
-import apiService from '../../../services/apiService';
-import Status from '../../../services/status';
-import Container from '../../../components/Loader/Loader';
-import Loader from '../../../components/Loader/Loader';
-import Error from '../../../components/Loader/Loader';
-import noPhoto from '../../../images/No_image_available.jpg';
-import css from './MovieDetailPage.module.css';
+import { NavLink, Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
+import apiService from '../../services/apiService';
+import Status from '../../services/status';
+import Container from '../../components/Loader/Loader';
+import Loader from '../../components/Loader/Loader';
+import Error from '../../components/Loader/Loader';
+import noPhoto from '../../images/No_image_available.jpg';
+import css from './MovieDetailsPage.module.css';
 
 
 export default function MovieDetailsPage() {
@@ -17,12 +17,14 @@ export default function MovieDetailsPage() {
     const [error, setError] = useState(null);
     const [status, setStatus] = useState(Status.IDLE);
 
+    const { id } = useParams();
+
     const onGoBack = () => navigate(location?.state?.from ?? '/');
 
     useEffect(() => {
         setStatus(Status.PENDING);
         apiService
-        .getMovieById(movie.id)
+        .getMovieById(id)
         .then(({ data }) => {
             setMovie(data);
             setStatus(Status.RESOLVED);
@@ -32,7 +34,7 @@ export default function MovieDetailsPage() {
             setError('Something went wrong. Please try again later.');
             setStatus(Status.REJECTED);
         })
-    }, [movie.id, error])
+    }, [id, error])
 
     return (
       <>

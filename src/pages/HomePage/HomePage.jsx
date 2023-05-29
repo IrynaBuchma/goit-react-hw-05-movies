@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
-import Status from '../../../services/status';
+import Status from '../../services/status';
 import { Link } from 'react-router-dom';
-import apiService from '../../../services/apiService';
-import Loader from '../../../components/Loader/Loader';
-import Error from '../../../components/Loader/Loader';
+import apiService from '../../services/apiService';
+import Loader from '../../components/Loader/Loader';
+import Error from '../../components/Loader/Loader';
 import css from './HomePage.module.css';
-import noPhoto from '../../../images/No_image_available.jpg';
+import noPhoto from '../../images/No_image_available.jpg';
 import ResponsivePagination from 'react-responsive-pagination';
-import '../../../services/pagination.css';
+import '../../services/pagination.css';
 
 
 export default function HomePage() {
