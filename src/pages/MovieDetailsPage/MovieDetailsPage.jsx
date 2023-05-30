@@ -17,16 +17,18 @@ export default function MovieDetailsPage() {
     const [error, setError] = useState(null);
     const [status, setStatus] = useState(Status.IDLE);
 
-    const { id } = useParams();
+    const { movieId} = useParams();
 
     const onGoBack = () => navigate(location?.state?.from ?? '/');
 
     useEffect(() => {
         setStatus(Status.PENDING);
         apiService
-        .getMovieById(id)
+        .getMovieById(movieId)
         .then(({ data }) => {
             setMovie(data);
+            console.log(data);
+            console.log(movieId);
             setStatus(Status.RESOLVED);
         })
         .catch(error => {
@@ -34,7 +36,7 @@ export default function MovieDetailsPage() {
             setError('Something went wrong. Please try again later.');
             setStatus(Status.REJECTED);
         })
-    }, [id, error])
+    }, [movieId, error]);
 
     return (
       <>
@@ -50,7 +52,7 @@ export default function MovieDetailsPage() {
             <div>
               <img 
                 src={
-                  movie.poster_path
+                    movie.poster_path
                     ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
                     : noPhoto
                   } 
@@ -84,7 +86,7 @@ export default function MovieDetailsPage() {
         <div className={css.navigation}>
           <h2 className={css.information}>Additional Information</h2>
           <NavLink
-            to={`/movies/${movie.id}/cast`}
+            to={`/movies/${movieId}/cast`}
             className={css.link}
             activeclassname={css.activeLink}
             state={location.state}
@@ -93,7 +95,7 @@ export default function MovieDetailsPage() {
           </NavLink>
 
           <NavLink
-            to={`/movies/${movie.id}/reviews`}
+            to={`/movies/${movieId}/reviews`}
             className={css.link}
             activeclassname={css.activeLink}
             state={location.state}

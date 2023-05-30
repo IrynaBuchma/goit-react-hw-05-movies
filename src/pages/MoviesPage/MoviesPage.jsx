@@ -19,6 +19,7 @@ export default function MoviesPage() {
     const [status, setStatus] = useState(Status.IDLE);
 
     const location = useLocation();
+    
    
       useEffect(() => {
         if(!query) return;
@@ -67,12 +68,11 @@ export default function MoviesPage() {
                     <li key={movie.id} className={css.moviesItem}>
                         <img 
                             src={
-                             movie.poster_path
+                                movie.poster_path
                                 ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
                                 : noPhoto
                             } 
                             alt={movie.title}
-                            width="320"
                             className={css.poster}
                         />
                         <NavLink

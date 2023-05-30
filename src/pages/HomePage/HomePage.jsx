@@ -18,6 +18,7 @@ export default function HomePage() {
   const [error, setError] = useState(null);
   const [status, setStatus] = useState(Status.IDLE);
   
+  
 
 useEffect(() => {
     setStatus(Status.PENDING);
@@ -25,6 +26,7 @@ useEffect(() => {
     .getTrendingMovies(currentPage)
     .then(({ results, total_pages}) => {
         setMovies(results);
+        console.log(results);
         setTotalPages(total_pages);
         setStatus(Status.RESOLVED);
     })
@@ -51,14 +53,12 @@ function handlePageChange(page) {
                 {movies.map(movie => (
                   <li key={movie.id} className={css.moviesItem}>
                     <Link
-                      to={{
-                        pathname: `movies/${movie.id}`,
-                      }}
+                      to={`/movies/${movie.id}`}
                       className={css.link}
                     >
                       <img 
                         src={
-                          movie.poster_path
+                            movie.poster_path
                             ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
                             : noPhoto
                             } 
