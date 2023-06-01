@@ -8,7 +8,7 @@ import css from './Reviews.module.css';
 
 export default function HomePage() {
 
-    const [movieId] = useParams();
+    const { movieId } = useParams();
     const [reviews, setReviews] = useState(null);
     const [error, setError] = useState(null);
     const [status, setStatus] = useState(Status.IDLE);
@@ -50,7 +50,7 @@ export default function HomePage() {
             </ul>
         )}
          {status === Status.IDLE && (
-            <p>We do not have any cast for this movie</p>
+            <p>We do not have any review for this movie</p>
          )}
         {status === Status.REJECTED && <p>{error.message}</p>}
     </>

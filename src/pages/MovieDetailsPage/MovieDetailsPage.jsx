@@ -2,12 +2,11 @@ import { useState, useEffect } from 'react';
 import { NavLink, Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import apiService from '../../services/apiService';
 import Status from '../../services/status';
-import Container from '../../components/Loader/Loader';
 import Loader from '../../components/Loader/Loader';
 import Error from '../../components/Loader/Loader';
 import noPhoto from '../../images/No_image_available.jpg';
 import css from './MovieDetailsPage.module.css';
-
+import Container from 'pages/Container/Container';
 
 export default function MovieDetailsPage() {
 
@@ -19,16 +18,12 @@ export default function MovieDetailsPage() {
 
     const { movieId} = useParams();
 
-    const onGoBack = () => navigate(location?.state?.from ?? '/');
-
     useEffect(() => {
         setStatus(Status.PENDING);
         apiService
         .getMovieById(movieId)
-        .then(({ data }) => {
+        .then((data) => {
             setMovie(data);
-            console.log(data);
-            console.log(movieId);
             setStatus(Status.RESOLVED);
         })
         .catch(error => {
@@ -38,10 +33,10 @@ export default function MovieDetailsPage() {
         })
     }, [movieId, error]);
 
-    return (
-      <>
-       <Container>
+    const onGoBack = () => navigate(location?.state?.from ?? '/');
 
+    return (
+        <Container>
         <button type="button" onClick={onGoBack} className={css.button}>
             Go back
         </button>
@@ -49,7 +44,7 @@ export default function MovieDetailsPage() {
         {status === Status.PENDING && <Loader />}
         {status === Status.REJECTED && <Error message={error.message} />}
         {status === Status.RESOLVED && (
-            <div>
+            <div className={css.movies}>
               <img 
                 src={
                     movie.poster_path
@@ -86,26 +81,23 @@ export default function MovieDetailsPage() {
         <div className={css.navigation}>
           <h2 className={css.information}>Additional Information</h2>
           <NavLink
-            to={`/movies/${movieId}/cast`}
+            to={`cast`} state={{ from: location }}
             className={css.link}
             activeclassname={css.activeLink}
-            state={location.state}
           >
             <p className={css.cast}>Cast</p>
           </NavLink>
 
           <NavLink
-            to={`/movies/${movieId}/reviews`}
+            to={`reviews`} state={{ from: location }}
             className={css.link}
             activeclassname={css.activeLink}
-            state={location.state}
           >
             <p className={css.reviews}>Reviews</p>
           </NavLink>
           
           <Outlet />
         </div>
-       </Container>
-      </>
+      </Container>
     )
 }

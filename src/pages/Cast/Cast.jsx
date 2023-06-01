@@ -9,7 +9,7 @@ import css from './Cast.module.css';
 
 export default function HomePage() {
 
-    const [movieId] = useParams();
+    const { movieId } = useParams();
     const [actors, setActors] = useState(null);
     const [error, setError] = useState(null);
     const [status, setStatus] = useState(Status.IDLE);

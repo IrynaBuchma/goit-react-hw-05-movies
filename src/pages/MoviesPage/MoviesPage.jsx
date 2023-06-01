@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
-import { NavLink, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import apiService from '../../services/apiService';
 import ResponsivePagination from 'react-responsive-pagination';
 import Status from '../../services/status';
 import Loader from 'components/Loader/Loader';
 import Error from 'components/Error/Error';
 import noPhoto from '../../images/No_image_available.jpg';
-import Searchbar from 'components/Searchbar/Searchbar'
+import Container from 'pages/Container/Container';
+import Searchbar from 'components/Searchbar/Searchbar';
 import css from './MoviesPage.module.css';
 import '../../services/pagination.css';
 
@@ -32,7 +33,6 @@ export default function MoviesPage() {
                     setStatus(Status.REJECTED);
                     return;
                 }
-                console.log(results);
                 setMovies(results);
                 setTotalPages(total_pages);
                 setStatus(Status.RESOLVED);
@@ -57,7 +57,7 @@ export default function MoviesPage() {
       };
 
       return (
-        <>
+        <Container>
             <Searchbar onHandleSubmit={searchImages}/>
             {status === Status.PENDING && <Loader />}
             {status === Status.REJECTED && <Error message={error.message} />}
@@ -66,23 +66,23 @@ export default function MoviesPage() {
                 <ul className={css.moviesList}>
                 {movies.map(movie => (
                     <li key={movie.id} className={css.moviesItem}>
-                        <img 
-                            src={
-                                movie.poster_path
-                                ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
-                                : noPhoto
+                    <Link
+                      to={`${movie.id}`} state={{ from: location }}
+                      className={css.link}
+                    >
+                      <img 
+                        src={
+                          movie.poster_path
+                            ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+                            : noPhoto
                             } 
-                            alt={movie.title}
-                            className={css.poster}
-                        />
-                        <NavLink
-                            to={`/movies/${movie.id}`} state={{ from: location }}
-                             className={css.link}
-                        >
-                         <span className={css.movieTitle}>{movie.title}</span>
-                        </NavLink>
-                    </li>
-                   ))}
+                        alt={movie.title}
+                        className={css.poster}
+                      />
+                    </Link>
+                    <span className={css.movieTitle}>{movie.title}</span>
+                  </li>
+                ))}
                 </ul>
                 {totalPages > 1 && (
                     <ResponsivePagination
@@ -95,6 +95,6 @@ export default function MoviesPage() {
                 )}
               </>  
             )}
-        </>
+        </Container>
       )
     }

@@ -1,14 +1,16 @@
 .item {
     margin-bottom: 5px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
   }
   
   .author {
     margin-bottom: 5px;
     font-size: 18px;
     letter-spacing: 0.1em;
-    color: #e3f309cb;
+    color: #292535cb;
   }
   
   .review {
+    margin-left: 20px;
     text-align: justify;
   }

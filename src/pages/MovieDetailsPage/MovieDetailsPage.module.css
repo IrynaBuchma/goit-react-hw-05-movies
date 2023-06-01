@@ -1,10 +1,9 @@
 .movies {
     display: flex;
+    flex-direction: row;
     margin-bottom: 20px;
     padding-bottom: 20px;
     padding-top: 20px;
-    border-bottom: 1px solid #6c6a6a;
-    border-top: 1px solid #928e8e;
   }
   
   .about {
@@ -12,7 +11,6 @@
   }
   
   .overview {
-    color: #e3f309cb;
     font-size: 20px;
     font-weight: 600;
   }
@@ -23,7 +21,7 @@
     color: #1d1d1d;
     font-size: 16px;
     font-weight: 400;
-    font-style: italic;
+    font-style:unset;
   }
   
   .navigation {
@@ -42,7 +40,7 @@
     display: inline-block;
     padding: 12px;
     text-decoration: none;
-    color: white;
+    color: rgb(81, 11, 222);
     font-size: 18px;
   }
   
@@ -69,7 +67,7 @@
     font-size: 0.95em;
     font-weight: 600;
     line-height: 1;
-    background-color: #483bf6;
+    background-color: #aea2cf;
     border-color: #a371e0;
     border-radius: 8px;
     color: black;
@@ -81,7 +79,7 @@
   
   .button:hover {
     background-color: rgba(0, 0, 0, 0.356);
-    color: #fff;
+    color: #a29e9e;
     box-shadow: 0 0 10px 0 #b267e8 inset, 0 0 10px 4px #ac77e8;
   }
   
@@ -93,6 +91,8 @@
   .mainTitle {
     margin-top: -10px;
     color: #1109f3;
+    font-size: 40px;
+    font-style:initial;
   }
   
   .title {
@@ -103,12 +103,13 @@
   .genre {
     display: flex;
     align-items: center;
-    font-style: italic;
+    font-style:unset;
   }
   
-  .genre li:not(:last-child)::after {
-    content: ',';
-    margin-right: 5px;
+  li {
+    padding-right: 10px;
+    margin-right: 10px;
+    border-right: #1d1d1d solid 1px;
   }
   
   .score {

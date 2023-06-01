@@ -1,24 +1,33 @@
-// import { useState } from "react";
-import { Route, Routes } from "react-router-dom";
-import HomePage from '../pages/HomePage/HomePage';
-import MoviesPage from '../pages/MoviesPage/MoviesPage';
-import MovieDetailsPage from '../pages/MovieDetailsPage/MovieDetailsPage';
-import Cast from '../pages/Cast/Cast';
-import Reviews from '../pages/Reviews/Reviews';
-import Layout from "./Layout/Layout";
+import { lazy, Suspense } from 'react';
+import { Navigate, Route, Routes } from "react-router-dom";
+import Loader from './Loader/Loader';
+
+const Layout = lazy(() => import('./Layout/Layout'));
+
+const HomePage = lazy(() => import('../pages/HomePage/HomePage'));
+
+const MoviesPage = lazy(() => import('../pages/MoviesPage/MoviesPage'));
+
+const MovieDetailsPage = lazy(() => import('../pages/MovieDetailsPage/MovieDetailsPage'));
+
+const Cast = lazy(() => import('../pages/Cast/Cast'));
+const Reviews = lazy(() => import('../pages/Reviews/Reviews'));
+
 
 const App = () => {
   return (
-    <Routes>
-        <Route path='/' element={<Layout />}>
-            <Route index element={<HomePage />} />
-            <Route path='movies' element={<MoviesPage />} />
-            <Route path='movies/:movieId' element={<MovieDetailsPage />} />
-              <Route path='cast' element={<Cast />} />
-              <Route path='reviews' element={<Reviews />} />
-        </Route>
-        <Route path="*" element={<HomePage />} />
-    </Routes>
+    <Suspense fallback={<Loader />}>
+      <Routes>
+          <Route path='/' element={<Layout />}>
+              <Route index element={<HomePage />} />
+              <Route path='movies' element={<MoviesPage />} />
+              <Route path='movies/:movieId' element={<MovieDetailsPage />} />
+                <Route path='movies/:movieId/cast' element={<Cast />} />
+                <Route path='movies/:movieId/reviews' element={<Reviews />} />
+          </Route>
+          <Route path="*" element={<Navigate to={'/'}/>} />
+      </Routes>
+    </Suspense>
   );
 };
 
