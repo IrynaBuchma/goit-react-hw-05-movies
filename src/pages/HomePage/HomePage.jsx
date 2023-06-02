@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react';
 import Status from '../../services/status';
-import { Link, useLocation } from 'react-router-dom';
 import apiService from '../../services/apiService';
 import Loader from '../../components/Loader/Loader';
 import Error from '../../components/Loader/Loader';
 import css from './HomePage.module.css';
-import noPhoto from '../../images/No_image_available.jpg';
 import ResponsivePagination from 'react-responsive-pagination';
 import '../../services/pagination.css';
 import Container from 'pages/Container/Container';
+import MovieList from 'components/MovieList/MovieList';
 
 
 export default function HomePage() {
@@ -18,10 +17,6 @@ export default function HomePage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [error, setError] = useState(null);
   const [status, setStatus] = useState(Status.IDLE);
-
-  const location = useLocation();
-  
-  
 
 useEffect(() => {
     setStatus(Status.PENDING);
@@ -52,27 +47,7 @@ return (
         {status === Status.REJECTED && <Error message={error.message} />}
         {status === Status.RESOLVED && (
           <div>
-            <ul className={css.moviesList}>
-              {movies.map(movie => (
-                <li key={movie.id} className={css.moviesItem}>
-                  <Link
-                    to={`movies/${movie.id}`} state={{ from: location }}
-                    className={css.link}
-                  >
-                    <img 
-                      src={
-                        movie.poster_path
-                          ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
-                          : noPhoto
-                          } 
-                      alt={movie.title}
-                      className={css.poster}
-                    />
-                  </Link>
-                  <span className={css.movieTitle}>{movie.title}</span>
-                </li>
-              ))}
-            </ul>
+            <MovieList movies={movies}/>
               {totalPages > 1 && (
                 <ResponsivePagination
                   total={totalPages}

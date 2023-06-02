@@ -85,7 +85,7 @@ export default function MovieDetailsPage() {
             className={css.link}
             activeclassname={css.activeLink}
           >
-            <p className={css.cast}>Cast</p>
+            Cast
           </NavLink>
 
           <NavLink
@@ -93,7 +93,7 @@ export default function MovieDetailsPage() {
             className={css.link}
             activeclassname={css.activeLink}
           >
-            <p className={css.reviews}>Reviews</p>
+            Reviews
           </NavLink>
           
           <Outlet />
